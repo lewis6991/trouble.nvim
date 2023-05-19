@@ -76,11 +76,14 @@ function View:new(opts)
   return this
 end
 
+--- @param name string
+--- @param value boolean|integer|string
+--- @param win? boolean
 function View:set_option(name, value, win)
   if win then
-    return vim.api.nvim_win_set_option(self.win, name, value)
+    vim.api.nvim_set_option_value(name, value, { win = self.win, scope = 'local' })
   else
-    return vim.api.nvim_buf_set_option(self.buf, name, value)
+    vim.api.nvim_set_option_value(name, value, { buf = self.buf })
   end
 end
 
